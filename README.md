@@ -4,8 +4,8 @@
 [![linttest](https://github.com/kemallt/php-project-lvl4/actions/workflows/linttest.yml/badge.svg)](https://github.com/kemallt/php-project-lvl4/actions/workflows/linttest.yml)
 
 ### CodeClimate
-[![Maintainability](https://api.codeclimate.com/v1/badges/2d7e8225c5d06295d380/maintainability)](https://codeclimate.com/github/kemallt/php-project-lvl4/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/2d7e8225c5d06295d380/test_coverage)](https://codeclimate.com/github/kemallt/php-project-lvl4/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c793f8399b8fd8cf2208/maintainability)](https://codeclimate.com/github/kemallt/php-project-lvl4/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c793f8399b8fd8cf2208/test_coverage)](https://codeclimate.com/github/kemallt/php-project-lvl4/test_coverage)
 
 # Demo
 
