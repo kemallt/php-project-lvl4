@@ -1,0 +1,18 @@
+name: rollbar
+
+on:
+    push
+
+jobs:
+    run-deploy-tracking:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Notify deploy to Rollbar
+            uses: rollbar/github-deploy-action@2.1.1
+            id: rollbar_deploy
+            with:
+              environment: 'production'
+              version: ${{ github.sha }}
+            env:
+              ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+              ROLLBAR_USERNAME: ${{ github.actor }}            
