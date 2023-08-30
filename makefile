@@ -6,7 +6,7 @@ setup:
 	cp -n .env.example .env|| true
 	php artisan key:gen --ansi
 	touch database/php_project_lvl4.sqlite
-	php artisan migrate
+	php artisan migrate:fresh --force
 	php artisan db:seed
 	npm run build
 
