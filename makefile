@@ -8,7 +8,6 @@ setup:
 	touch database/php_project_lvl4.sqlite
 	php artisan migrate:fresh --force
 	php artisan db:seed
-	npm run build
 
 log:
 	tail -f storage/logs/laravel.log
