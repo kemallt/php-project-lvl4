@@ -22,7 +22,7 @@ RUN npm ci
 RUN npm run build
 
 ARG VERSION=`sentry-cli releases propose-version`
-RUN sentry-cli releases new --org $SENTRY_ORG --project $SENTRY_PROJECT --auth-token $SENTRY_AUTH_TOKEN $VERSION
+RUN sentry-cli releases new --org $SENTRY_ORG --project $SENTRY_PROJECT --auth-token $SENTRY_AUTH_TOKEN $VERSION $VERSION
 RUN sentry-cli releases set-commits --auto --org $SENTRY_ORG --project $SENTRY_PROJECT --auth-token $SENTRY_AUTH_TOKEN $VERSION
 RUN sentry-cli releases finalize --org $SENTRY_ORG --project $SENTRY_PROJECT --auth-token $SENTRY_AUTH_TOKEN $VERSION
 
