@@ -10,7 +10,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "rollbar/rollbar-laravel": "^8.0"
+        "rollbar/rollbar-laravel": "^8.0",
+        "sentry/sentry-laravel": "^3.8"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
