@@ -21,6 +21,7 @@ RUN composer install
 RUN npm ci
 RUN npm run build
 
+ARG VERSION=`sentry-cli releases propose-version`
 RUN sentry-cli releases new "$VERSION"
 RUN sentry-cli releases set-commits "$VERSION" --auto
 RUN sentry-cli releases finalize "$VERSION"
