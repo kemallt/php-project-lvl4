@@ -22,8 +22,8 @@ RUN npm ci
 RUN npm run build
 
 ARG VERSION=`sentry-cli releases propose-version`
-RUN sentry-cli releases new "$VERSION"
-RUN sentry-cli releases set-commits "$VERSION" --auto
-RUN sentry-cli releases finalize "$VERSION"
+RUN sentry-cli releases new "$VERSION" --org "$SENTRY_ORG" --project "$SENTRY_PROJECT" --auth-token "$SENTRY_AUTH_TOKEN"
+RUN sentry-cli releases set-commits "$VERSION" --auto --org "$SENTRY_ORG" --project "$SENTRY_PROJECT" --auth-token "$SENTRY_AUTH_TOKEN"
+RUN sentry-cli releases finalize "$VERSION" --org "$SENTRY_ORG" --project "$SENTRY_PROJECT" --auth-token "$SENTRY_AUTH_TOKEN"
 
 CMD ["bash", "-c", "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
