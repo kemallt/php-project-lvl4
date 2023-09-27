@@ -17,8 +17,8 @@ class TaskStatusController extends Controller
     public function index()
     {
         return view('taskStatuses.index', [
-            'taskStatuses' => TaskStatus::all()->map(function($status) {
-                $statusDate = Carbon::parse($status->created_at)->format('d-m-Y'); //::createFromFormat('YYYY-mm-dd HH:ii:ss',)->format('YYYY-mm-dd');
+            'taskStatuses' => TaskStatus::all()->map(function ($status) {
+                $statusDate = Carbon::parse($status->created_at)->format('d-m-Y');
                 $status->date = $statusDate;
                 return $status;
             }),
