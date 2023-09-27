@@ -28,7 +28,7 @@
                         <tr class="border-b border-dashed text-left">
                             <td>{{ $taskStatus->id }}</td>
                             <td>{{ $taskStatus->name }}</td>
-                            <td>{{ $taskStatus->created_at }}</td>
+                            <td>{{ $taskStatus->date }}</td>
                             <td>
                                 @if ($userIsLoggedIn)
                                     <a data-confirm="Вы уверены?" data-method="delete" class="text-red-600 hover:text-red-900" href="{{ route('task_statuses.destroy', $taskStatus->id) }}">

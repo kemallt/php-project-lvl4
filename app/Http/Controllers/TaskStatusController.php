@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskStatusRequest;
 use App\Http\Requests\UpdateTaskStatusRequest;
 use App\Models\TaskStatus;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TaskStatusController extends Controller
 {
@@ -15,7 +17,11 @@ class TaskStatusController extends Controller
     public function index()
     {
         return view('taskStatuses.index', [
-            'taskStatuses' => TaskStatus::all(),
+            'taskStatuses' => TaskStatus::all()->map(function($status) {
+                $statusDate = Carbon::parse($status->created_at)->format('d-m-Y'); //::createFromFormat('YYYY-mm-dd HH:ii:ss',)->format('YYYY-mm-dd');
+                $status->date = $statusDate;
+                return $status;
+            }),
             'userIsLoggedIn' => Auth::check(),
         ]);
     }
