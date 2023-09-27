@@ -58,7 +58,7 @@ class TaskStatusController extends Controller
     {
         $taskStatus['name'] = $request->validated()['name'];
         $taskStatus->save();
-        flash('Статус успешно обновлен')->success();    
+        flash('Статус успешно обновлен')->success();
         return redirect('/task_statuses')->with('status', 'Статус успшено изменён');
     }
 
