@@ -16,6 +16,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@rails/ujs": "^7.0.8",
         "@sentry/browser": "^7.40.0"
     }
 }
