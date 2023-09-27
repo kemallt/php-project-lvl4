@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,5 +26,11 @@ class UpdateTaskStatusRequest extends FormRequest
         return [
             'name' => 'required|string|max:255|unique:task_statuses,name',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        flash(@lang('main.flashes.cannot_upate_status'))->error();
+        return parent::failedValidation($validator);    
     }
 }

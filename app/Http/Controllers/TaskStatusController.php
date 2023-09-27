@@ -36,7 +36,8 @@ class TaskStatusController extends Controller
     public function store(StoreTaskStatusRequest $request)
     {
         TaskStatus::create($request->validated());
-        return redirect('/task_statuses');
+        flash('Статус успешно добавлен')->success();
+        return redirect('/task_statuses')->with('status', 'Статус успешно создан');
     }
 
     /**
@@ -57,7 +58,8 @@ class TaskStatusController extends Controller
     {
         $taskStatus['name'] = $request->validated()['name'];
         $taskStatus->save();
-        return redirect('/task_statuses');
+        flash('Статус успешно обновлен')->success();    
+        return redirect('/task_statuses')->with('status', 'Статус успшено изменён');
     }
 
     /**
@@ -66,6 +68,7 @@ class TaskStatusController extends Controller
     public function destroy(TaskStatus $taskStatus)
     {
         $taskStatus->delete();
+        flash('Статус успешно удален')->success();
         return redirect('/task_statuses');
     }
 }

@@ -1,22 +1,25 @@
 <x-app-layout :userIsLoggedIn=$userIsLoggedIn>
     <section class="bg-white dark:bg-gray-900">
         <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
+            @include('components.flash-success', [
+                'message' => session('status'),
+            ])
             <div class="grid col-span-full">
-                <h1 class="mb-5">Статусы</h1>
+                <h1 class="mb-5">@lang('main.app.statuses')</h1>
                 <div>
-                    @if ($userIsLoggedIn)
+                    @can('create', App\Models\TaskStatus::class)
                         <a href="{{ route('task_statuses.create') }}" class="bg-blue-500 hove:bg-blue-700 text-white font-bold py-2 px-4 rounded">Создать статус</a>
-                    @endif
+                    @endcan
                 </div>
                 <table class="mt-4">
                     <thead class="border-b-2 border-solid border-black text-left">
                         <tr>
-                            <th>ID</th>
-                            <th>Имя</th>
-                            <th>Дата создания</th>
+                            <th>@lang('main.statuses.id')</th>
+                            <th>@lang('main.statueses.name')</th>
+                            <th>@lang('main.statuses.created_at')</th>
                             <th>
                                 @if ($userIsLoggedIn)
-                                    Действия
+                                    @lang('main.statuses.actions')
                                 @endif                                
                             </th>
                         </tr>
@@ -29,10 +32,10 @@
                             <td>
                                 @if ($userIsLoggedIn)
                                     <a data-confirm="Вы уверены?" data-method="delete" class="text-red-600 hover:text-red-900" href="{{ route('task_statuses.destroy', $taskStatus->id) }}">
-                                        Удалить
+                                        @lang('main.statuses.delete')
                                     </a>
                                     <a class="text-blue-600 hover:text-blue-900" href="{{ route('task_statuses.edit', $taskStatus->id) }}">
-                                        Изменить
+                                        @lang('main.statuses.edit')
                                     </a>
                                 @endif
                             </td>
