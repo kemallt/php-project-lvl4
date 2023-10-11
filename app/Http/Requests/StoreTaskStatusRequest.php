@@ -29,15 +29,14 @@ class StoreTaskStatusRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        flash(@lang('main.flashes.cannot_add_status'))->error();
         return parent::failedValidation($validator);
     }
 
     public function messages()
     {
         return [
-            'name.required' => @lang('validations.status_name_required'),
-            'name.unique' => @lang('validations.status_name_not_unique'),
+            'name.required' => __('validations.status_name_required'),
+            'name.unique' => __('validations.status_name_not_unique'),
         ];
     }
 }

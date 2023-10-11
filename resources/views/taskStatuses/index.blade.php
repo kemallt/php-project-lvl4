@@ -15,7 +15,7 @@
                     <thead class="border-b-2 border-solid border-black text-left">
                         <tr>
                             <th>@lang('main.statuses.id')</th>
-                            <th>@lang('main.statueses.name')</th>
+                            <th>@lang('main.statuses.name')</th>
                             <th>@lang('main.statuses.created_at')</th>
                             <th>
                                 @if ($userIsLoggedIn)

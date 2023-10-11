@@ -25,5 +25,8 @@ return [
     'flashes' => [
         'cannot_add_status' => 'Не удалось добавить статус',
         'cannot_upate_status' => 'Не удалось обновить статус',
-    ],
+        'status_added' => 'Статус успешно создан',
+        'status_deleted' => 'Статус успешно удален',
+        'status_changed' => 'Статус успешно изменен',
+    ]
 ];

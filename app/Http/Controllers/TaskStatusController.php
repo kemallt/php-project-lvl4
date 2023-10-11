@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Log;
 
 class TaskStatusController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -42,8 +47,7 @@ class TaskStatusController extends Controller
     public function store(StoreTaskStatusRequest $request)
     {
         TaskStatus::create($request->validated());
-        flash('Статус успешно добавлен')->success();
-        return redirect('/task_statuses')->with('status', 'Статус успешно создан');
+        return redirect('/task_statuses', 201)->with('status', __('main.flashes.status_added'));
     }
 
     /**
@@ -64,8 +68,7 @@ class TaskStatusController extends Controller
     {
         $taskStatus['name'] = $request->validated()['name'];
         $taskStatus->save();
-        flash('Статус успешно обновлен')->success();
-        return redirect('/task_statuses')->with('status', 'Статус успшено изменён');
+        return redirect('/task_statuses')->with('status', __('main.flashes.status_changed'));
     }
 
     /**
@@ -74,7 +77,6 @@ class TaskStatusController extends Controller
     public function destroy(TaskStatus $taskStatus)
     {
         $taskStatus->delete();
-        flash('Статус успешно удален')->success();
-        return redirect('/task_statuses');
+        return redirect('/task_statuses')->with('status', __('main.flashes.status_deleted'));
     }
 }

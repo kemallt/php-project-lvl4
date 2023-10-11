@@ -10,7 +10,7 @@ class TaskStatusPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
         return true;
     }
@@ -44,7 +44,7 @@ class TaskStatusPolicy
      */
     public function delete(User $user, TaskStatus $taskStatus): bool
     {
-        //
+        return true;
     }
 
     /**

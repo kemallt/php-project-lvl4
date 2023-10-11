@@ -5,6 +5,8 @@ use App\Http\Controllers\TaskStatusController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use function Clue\StreamFilter\fun;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +22,10 @@ Route::get('/', function () {
     return view('dashboard', [
         'userIsLoggedIn' => Auth::check()
     ]);
+});
+
+Route::get('/phpinfo', function() {
+    return view('phpinfo');
 });
 
 Route::resource('/task_statuses', TaskStatusController::class)->except(['show']);
