@@ -6,6 +6,7 @@ use App\Models\TaskStatus;
 use Database\Factories\TaskStatusFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Lang;
 
 class TaskStatusSeeder extends Seeder
 {
@@ -14,9 +15,9 @@ class TaskStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        TaskStatus::create(['name' => 'новый']);
-        TaskStatus::create(['name' => 'в работе']);
-        TaskStatus::create(['name' => 'на тестировании']);
-        TaskStatus::create(['name' => 'завершен']);
+        TaskStatus::create(['name' => Lang::get('main.statuses_seed.new')]);
+        TaskStatus::create(['name' => Lang::get('main.statuses_seed.in_work')]);
+        TaskStatus::create(['name' => Lang::get('main.statuses_seed.testing')]);
+        TaskStatus::create(['name' => Lang::get('main.statuses_seed.completed')]);
     }
 }

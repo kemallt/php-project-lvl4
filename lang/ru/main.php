@@ -22,11 +22,30 @@ return [
         'actions' => 'Действия',
         'create_status' => 'Создать статус',
     ],
+    'statuses_seed' => [
+        'new' => 'новый',
+        'in_work' => 'в работе',
+        'testing' => 'на тестировании',
+        'completed' => 'завершен',
+    ],
     'flashes' => [
         'cannot_add_status' => 'Не удалось добавить статус',
         'cannot_upate_status' => 'Не удалось обновить статус',
         'status_added' => 'Статус успешно создан',
         'status_deleted' => 'Статус успешно удален',
         'status_changed' => 'Статус успешно изменен',
-    ]
+    ],
+    'tasks' => [
+        'create' => 'Создать задачу',
+        'id' => 'ID',
+        'name' => 'Имя',
+        'created_at' => 'Дата создания',
+        'edit' => 'Изменить',
+        'update' => 'Обновить',
+        'store' => 'Создать',
+        'action' => 'Действия',
+        'author' => 'Автор',
+        'doer' => 'Исполнитель',
+        'status' => 'Статус',
+    ],
 ];
