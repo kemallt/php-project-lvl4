@@ -6,25 +6,25 @@
             <div class="flex">
                 <div>
                     <select class="rounded border-gray-300" name="filter[status_id]">
-                        <option selected="selected" value="Статус">Статус</option>
+                        <option {{ $task_status_id == null ? "selected" : "" }} value={{ null }}>Статус</option>
                         @foreach ($task_statuses as $task_status)
-                            <option value="{{ $task_status->id }}">{{ $task_status->name }}</option>
+                            <option value="{{ $task_status->id }}" {{ $task_status_id == $task_status->id  ? "selected" : "" }}>{{ $task_status->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
                     <select class="ml-2 rounded border-gray-300" name="filter[created_by_id]">
-                        <option selected="selected" value="Автор">Автор</option>
+                        <option {{ $created_by_id == null ? "selected" : "" }} value={{ null }}>Автор</option>
                         <@foreach ($users as $author)
-                            <option value="{{ $author->id }}">{{ $author->name }}</option>
+                            <option value="{{ $author->id }}" {{ $created_by_id == $author->id ? "selected" : "" }}>{{ $author->name }}</option>
                             @endforeach
                     </select>
                 </div>
                 <div>
-                    <select class="ml-2 rounded border-gray-300" name="filter[assignet_ty_id]">
-                        <option selected="selected" value="Исполнитель">Исполнитель</option>
+                    <select class="ml-2 rounded border-gray-300" name="filter[assigned_to_id]">
+                        <option {{ $assigned_to_id == null ? "selected" : "" }} value={{ null }}>Исполнитель</option>
                         @foreach ($users as $doer)
-                            <option value="{{ $doer->id }}">{{ $doer->name }}</option>
+                            <option value="{{ $doer->id }}" {{ $assigned_to_id == $doer->id ? "selected" : ""}}>{{ $doer->name }}</option>
                         @endforeach
                     </select>
                 </div>
