@@ -18,8 +18,8 @@ class TaskStatusTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed();   
-        $this->user = User::factory()->create(); 
+        $this->seed();
+        $this->user = User::factory()->create();
     }
 
     /**
@@ -116,10 +116,13 @@ class TaskStatusTest extends TestCase
         $response = $this->delete(route('task_statuses.destroy', $taskStatus->id));
         $response->assertForbidden();
 
-        $responseAuthenticated = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus->id));
+        $deletableTaskStatus = TaskStatus::factory()->create();
+        $deletableTaskName= $deletableTaskStatus->name;
+        $deletableTaskId = $deletableTaskStatus->id;
+        $responseAuthenticated = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $deletableTaskId));
         $responseAuthenticated->assertRedirect();
         $responseAuthenticated->assertSessionHas('status', __('main.flashes.status_deleted'));
-        $this->assertDatabaseMissing('task_statuses', ['name' => $taskStatus->name]);
+        $this->assertDatabaseMissing('task_statuses', ['name' => $deletableTaskName]);
     }
 
 }
