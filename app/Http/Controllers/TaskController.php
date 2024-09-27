@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -13,7 +14,7 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(Task::class);    
+        $this->authorizeResource(Task::class);
     }
 
     /**
@@ -37,15 +38,23 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create', [
+            'userIsLoggedIn' => Auth::check(),
+            'taskStatuses' => TaskStatus::all(),
+            'users' => User::select('id', 'name')->get(),
+            'tags' => [],
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['created_by_id'] = Auth::user()->id;
+        Task::create($data);
+        return redirect('/tasks', 201)->with('status', __('main.flashes.task_added'));
     }
 
     /**
@@ -64,15 +73,27 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit', [
+            'task' => $task,
+            'userIsLoggedIn' => Auth::check(),
+            'taskStatuses' => TaskStatus::all(),
+            'users' => User::select('id', 'name')->get(),
+            'tags' => [],
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(StoreTaskRequest $request, Task $task)
     {
-        //
+        $vaidatedData = $request->validated();
+        $task['name'] = $vaidatedData['name'];
+        $task['description'] = $vaidatedData['description'];
+        $task['status_id'] = $vaidatedData['status_id'];
+        $task['assigned_to_id'] = $vaidatedData['assigned_to_id'];
+        $task->save();
+        return redirect('/tasks')->with('status', __('main.flashes.task_changed'));
     }
 
     /**
@@ -80,7 +101,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return redirect('/tasks')->with('status', __('main.flashes.task_deleted'));
     }
 
     public function getFilteredTasks($filter)
@@ -88,7 +110,7 @@ class TaskController extends Controller
         $task_status_id = $filter['status_id'] ?? null;
         $created_by_id  = $filter['created_by_id'] ?? null;
         $assigned_to_id = $filter['assigned_to_id'] ?? null;
-        
+
         $tasks = Task::with('status', 'created_by', 'assigned_to')->get()->map(function ($task) {
             $taskDate = Carbon::parse($task->created_at)->format('d.m.Y');
             $task->date = $taskDate;

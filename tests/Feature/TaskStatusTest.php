@@ -4,9 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\TaskStatus;
 use App\Models\User;
-use Illuminate\Console\View\Components\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TaskStatusTest extends TestCase
@@ -22,19 +20,14 @@ class TaskStatusTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    /**
-     * A basic feature test example.
-     */
     public function testIndex(): void
     {
         $response = $this->get('/task_statuses');
 
         $response->assertStatus(200);
-        $response->assertSee('Статусы');
+        $response->assertSee(__('main.app.statuses'));
 
-        $response->assertDontSee('Создать статус');
-
-        // $user = User::factory()->create();
+        $response->assertDontSee(__('main.statuses.create'));
 
         $responseAuthenticated = $this->actingAs($this->user)->get('/task_statuses');
         $responseAuthenticated->assertStatus(200);
@@ -112,16 +105,16 @@ class TaskStatusTest extends TestCase
     public function testDelete(): void
     {
         $deletableTaskStatus = TaskStatus::factory()->create();
-        $deletableTaskName= $deletableTaskStatus->name;
-        $deletableTaskId = $deletableTaskStatus->id;
+        $deletableTaskStatusName= $deletableTaskStatus->name;
+        $deletableTaskStatusId = $deletableTaskStatus->id;
 
-        $response = $this->delete(route('task_statuses.destroy', $deletableTaskId));
+        $response = $this->delete(route('task_statuses.destroy', $deletableTaskStatusId));
         $response->assertForbidden();
 
-        $responseAuthenticated = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $deletableTaskId));
+        $responseAuthenticated = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $deletableTaskStatusId));
         $responseAuthenticated->assertRedirect();
         $responseAuthenticated->assertSessionHas('status', __('main.flashes.status_deleted'));
-        $this->assertDatabaseMissing('task_statuses', ['name' => $deletableTaskName]);
+        $this->assertDatabaseMissing('task_statuses', ['name' => $deletableTaskStatusName]);
 
         $nonDeletableTaskStatus = TaskStatus::first();
         $responseAuthenticatedNonDeletable = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $nonDeletableTaskStatus));

@@ -36,7 +36,7 @@
                             {{ $task->name }}
                     </td>
                     <td>{{ $task->created_by->name }}</td>
-                    <td>{{ $task->assigned_to->name }}</td>
+                    <td>{{ $task->assigned_to->name ?? '' }}</td>
                     <td>{{ $task->date }}</td>
                     <td>
                         @if ($userIsLoggedIn)

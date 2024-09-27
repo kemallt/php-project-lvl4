@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateTaskStatusRequest;
 use App\Models\TaskStatus;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class TaskStatusController extends Controller
 {
