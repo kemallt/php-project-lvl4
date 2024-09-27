@@ -67,8 +67,15 @@ class TaskTest extends TestCase
         $responseAuthenticated->assertSessionHas('status', __('main.flashes.task_added'));
         $this->assertDatabaseHas('tasks', $body);
 
-        $invalidBody = ['name' => '', 'description' => 'test task description'];
         $countBefore = Task::all()->count();
+        $responseAuthenticatedDouble = $this->actingAs($this->user)->post(route('tasks.store'), $body);
+        $responseAuthenticatedDouble->assertInvalid([
+            'name' => __('validations.task_name_must_be_unique'),
+        ]);
+        $countAfter = Task::all()->count();
+        $this->assertEquals($countBefore, $countAfter);
+
+        $invalidBody = ['name' => '', 'description' => 'test task description'];
         $responseAuthenticatedDouble = $this->actingAs($this->user)->post(route('tasks.store'), $invalidBody);
         $responseAuthenticatedDouble->assertInvalid([
             'name' => __('validations.task_name_required'),
