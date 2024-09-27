@@ -34,6 +34,7 @@ return [
         'status_added' => 'Статус успешно создан',
         'status_deleted' => 'Статус успешно удален',
         'status_changed' => 'Статус успешно изменен',
+        'status_has_tasks' => 'Не удалось удалить статус'
     ],
     'tasks' => [
         'create' => 'Создать задачу',

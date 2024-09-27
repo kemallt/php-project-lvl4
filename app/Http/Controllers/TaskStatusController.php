@@ -76,6 +76,9 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
+        if ($taskStatus->tasks()->get()->count() > 0) {
+            return redirect('/task_statuses')->with('status', __('main.flashes.status_has_tasks'));
+        }
         $taskStatus->delete();
         return redirect('/task_statuses')->with('status', __('main.flashes.status_deleted'));
     }

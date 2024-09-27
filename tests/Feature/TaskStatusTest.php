@@ -111,18 +111,23 @@ class TaskStatusTest extends TestCase
 
     public function testDelete(): void
     {
-        $taskStatus = TaskStatus::first();
-
-        $response = $this->delete(route('task_statuses.destroy', $taskStatus->id));
-        $response->assertForbidden();
-
         $deletableTaskStatus = TaskStatus::factory()->create();
         $deletableTaskName= $deletableTaskStatus->name;
         $deletableTaskId = $deletableTaskStatus->id;
+
+        $response = $this->delete(route('task_statuses.destroy', $deletableTaskId));
+        $response->assertForbidden();
+
         $responseAuthenticated = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $deletableTaskId));
         $responseAuthenticated->assertRedirect();
         $responseAuthenticated->assertSessionHas('status', __('main.flashes.status_deleted'));
         $this->assertDatabaseMissing('task_statuses', ['name' => $deletableTaskName]);
+
+        $nonDeletableTaskStatus = TaskStatus::first();
+        $responseAuthenticatedNonDeletable = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $nonDeletableTaskStatus));
+        $responseAuthenticatedNonDeletable->assertRedirect();
+        $responseAuthenticatedNonDeletable->assertSessionHas('status', __('main.flashes.status_has_tasks'));
+        $this->assertDatabaseHas('task_statuses', ['name' => $nonDeletableTaskStatus->name]);
     }
 
 }
