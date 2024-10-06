@@ -67,6 +67,7 @@ class TaskTest extends TestCase
         $responseAuthenticated->assertSessionHas('status', __('main.flashes.task_added'));
         $this->assertDatabaseHas('tasks', $body);
 
+        // test double name
         $countBefore = Task::all()->count();
         $responseAuthenticatedDouble = $this->actingAs($this->user)->post(route('tasks.store'), $body);
         $responseAuthenticatedDouble->assertInvalid([
@@ -136,11 +137,11 @@ class TaskTest extends TestCase
         $updatedTask = Task::first()->toArray();
         $taskId = $updatedTask['id'];
         $oldName = $updatedTask['name'];
-        $updatedTask['name'] = 'updated name';
+        $updatedName = 'updated name';
+        $updatedTask['name'] = $updatedName;
         $updatedTask['description'] = 'updated description';
         unset($updatedTask['created_at']);
         unset($updatedTask['updated_at']);
-        $secondTask = Task::firstWhere('id', '<>', $taskId)->toArray();
 
         $response = $this->patch(route('tasks.update', $taskId), $updatedTask);
         $response->assertForbidden();
@@ -150,6 +151,17 @@ class TaskTest extends TestCase
         $responseAuthenticated->assertSessionHas('status', __('main.flashes.task_changed'));
         $this->assertDatabaseHas('tasks', $updatedTask);
         $this->assertDatabaseMissing('tasks', ['name' => $oldName]);
+
+        // test double name
+        $secondTask = Task::firstWhere('id', '<>', $taskId)->toArray();
+        $secondTask['name'] = $updatedName;
+        unset($updatedTask['created_at']);
+        unset($updatedTask['updated_at']);
+        $secondTaskId = $secondTask['id'];
+        $responseAuthenticatedDouble = $this->actingAs($this->user)->patch(route('tasks.update', $secondTaskId), $secondTask);
+        $responseAuthenticatedDouble->assertInvalid([
+            'name' => __('validations.task_name_must_be_unique'),
+        ]);
 
         // test empty name
         $updatedTask['name'] = '';
@@ -169,11 +181,11 @@ class TaskTest extends TestCase
 
         // test empty wrong status
         $updatedTask['status_id'] = -1;
-        $responseAuthenticatedDouble = $this->actingAs($this->user)->patch(route('tasks.update', $taskId), $updatedTask);
-        $responseAuthenticatedDouble->assertInvalid([
+        $responseAuthenticatedEmpty = $this->actingAs($this->user)->patch(route('tasks.update', $taskId), $updatedTask);
+        $responseAuthenticatedEmpty->assertInvalid([
             'status_id' => __('validations.task_has_wrong_status'),
         ]);
-        $responseAuthenticatedDouble->assertRedirect();
+        $responseAuthenticatedEmpty->assertRedirect();
     }
 
     public function testDelete(): void

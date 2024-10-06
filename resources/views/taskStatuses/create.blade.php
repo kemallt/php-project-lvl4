@@ -14,7 +14,7 @@
                     <input class="rounded border-gray-300 w-1/3" name="name" type="text" id="name"
                         value="{{ old('name') }}">
                 </div>
-                @include('components.input-error', [
+                @include('components.inputs-error', [
                     'messages' => $errors->all(),
                 ])
                 <div class="mt-2">

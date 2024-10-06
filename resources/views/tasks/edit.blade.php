@@ -3,8 +3,8 @@
         'message' => session('error'),
     ])
     <div class="grid col-span-full">
-        <h1 class="mb-5">@lang('main.tasks.create_task')</h1>
-        <form method="POST" action="/task_statuses" accept-charset="UTF-8" class="w-50">
+        <h1 class="mb-5">@lang('main.tasks.update_task')</h1>
+        <form method="POST" action="{{ route('tasks.update', $task->id) }}" accept-charset="UTF-8" class="w-50">
             @csrf
             <input type="hidden" name="_method" id="_method" value="PATCH">
             <div class="flex flex-col">
@@ -15,6 +15,11 @@
                     <input class="rounded border-gray-300 w-1/3" name="name" type="text" id="name"
                         value="{{ $task->name }}">
                 </div>
+                @if (array_key_exists('name', $errors->messages()))
+                @include('components.input-error', [
+                    'messages' => $errors->messages()['name'],
+                ])
+                @endif
                 <div>
                     <label for="description">@lang('main.tasks.description')</label>
                 </div>
@@ -35,6 +40,11 @@
                     @endforeach
                     </select>
                 </div>
+                @if (array_key_exists('status_id', $errors->messages()))
+                @include('components.input-error', [
+                    'messages' => $errors->messages()['status_id'],
+                ])
+                @endif
                 <div class="mt-2">
                     <label for="assigned_to_id">@lang('main.tasks.assigned_to')</label>
                 </div>
@@ -56,9 +66,9 @@
                     @endforeach
                     </select>
                 </div>
-                @include('components.input-error', [
+                {{-- @include('components.inputs-error', [
                     'messages' => $errors->all(),
-                ])
+                ]) --}}
                 <div class="mt-2">
                     <input class="bg-blue-500 hove:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit"
                         value="@lang('main.tasks.update')">

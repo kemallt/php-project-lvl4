@@ -9,6 +9,7 @@ return [
         'hexlet_greetings' => 'Привет от Хекслета!',
         'description' => 'Это простой менеджер задач на Laravel',
         'press_me' => ' Нажми меня ',
+        'required_field_error' => 'Это обязательное поле',
     ],
     'statuses' => [
         'create' => 'Создать статус',
@@ -43,6 +44,7 @@ return [
     ],
     'tasks' => [
         'create' => 'Создать задачу',
+        'update_task' => 'Изменение задачи',
         'id' => 'ID',
         'name' => 'Имя',
         'description' => 'Описание',
@@ -57,6 +59,5 @@ return [
         'author' => 'Автор',
         'doer' => 'Исполнитель',
         'status' => 'Статус',
-        'create_task' => 'Создать задачу',
     ],
 ];
