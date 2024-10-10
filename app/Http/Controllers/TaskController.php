@@ -23,6 +23,7 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
+
         return view('tasks.index', [
             'tasks' => $this->getFilteredTasks($request->filter),
             'task_statuses' => TaskStatus::all(),
@@ -31,7 +32,7 @@ class TaskController extends Controller
             'task_status_id' => $request->filter['status_id'] ?? null,
             'created_by_id'  => $request->filter['created_by_id'] ?? null,
             'assigned_to_id' => $request->filter['assigned_to_id'] ?? null,
-            'current_user_id' => Auth::user()->id,
+            'current_user_id' => Auth::user()->id ?? null,
         ]);
     }
 
